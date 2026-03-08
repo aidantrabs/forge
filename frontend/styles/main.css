@@ -102,3 +102,168 @@ body {
         scroll-behavior: auto;
     }
 }
+
+/* -- pull-string toggle -- */
+
+.pull-string {
+    position: fixed;
+    top: 0;
+    right: 2.5rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.pull-string__line {
+    width: 0;
+    height: 100px;
+    border-left: 1px dashed var(--pull-string);
+    transition: border-color 0.2s ease;
+}
+
+.pull-string__handle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--pull-string);
+    background: transparent;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.pull-string:hover .pull-string__handle {
+    transform: scale(1.2);
+    border-color: var(--accent);
+}
+
+.pull-string:hover .pull-string__line {
+    border-color: var(--accent);
+}
+
+@keyframes pull {
+    0% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(12px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.pull-string.pulling .pull-string__handle,
+.pull-string.pulling .pull-string__line {
+    animation: pull 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* -- noise overlay -- */
+
+.noise {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.03;
+    will-change: opacity;
+    transform: translate3d(0, 0, 0);
+}
+
+.dark .noise {
+    opacity: 0.02;
+}
+
+@media (max-width: 768px) {
+    .noise {
+        display: none;
+    }
+}
+
+/* -- link hover underline -- */
+
+.link-hover {
+    position: relative;
+    text-decoration: none;
+}
+
+.link-hover::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--accent);
+    transition: width 0.2s ease;
+}
+
+.link-hover:hover::after {
+    width: 100%;
+}
+
+/* -- scroll reveal -- */
+
+.animate-fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.animate-fade-in-up.is-visible {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* -- label with line -- */
+
+.label-with-line {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.label-with-line::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background-color: var(--border);
+}
+
+/* -- graffiti background -- */
+
+.graffiti-bg {
+    position: absolute;
+    font-family: var(--font-graffiti);
+    font-size: clamp(100px, 20vw, 200px);
+    color: var(--text);
+    opacity: 0.06;
+    transform: rotate(-8deg);
+    pointer-events: none;
+    line-height: 0.85;
+    user-select: none;
+}
+
+.dark .graffiti-bg {
+    opacity: 0.04;
+}
+
+/* -- fout prevention -- */
+
+body.loaded {
+    opacity: 1 !important;
+    transition:
+        opacity 0.3s ease,
+        background-color 0.3s ease,
+        color 0.3s ease;
+}
