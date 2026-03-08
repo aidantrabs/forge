@@ -74,5 +74,9 @@ fn build() {
         fs::write(tag_dir.join("index.html"), html).expect("failed to write tag page");
     }
 
+    // generate rss feed
+    let rss = forge::feed::generate_rss(&posts, &config);
+    fs::write(output.join("feed.xml"), rss).expect("failed to write rss feed");
+
     println!("built {} posts, {} tags", posts.len(), tags.len());
 }
