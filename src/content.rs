@@ -35,11 +35,7 @@ impl Post {
         let frontmatter: Frontmatter =
             serde_yaml::from_str(&fm).expect("failed to parse frontmatter");
 
-        let slug = path
-            .file_stem()
-            .unwrap()
-            .to_string_lossy()
-            .into_owned();
+        let slug = path.file_stem().unwrap().to_string_lossy().into_owned();
 
         let word_count = body.split_whitespace().count();
         let reading_time = (word_count / 200).max(1);

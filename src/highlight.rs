@@ -7,6 +7,12 @@ pub struct Highlighter {
     theme: syntect::highlighting::Theme,
 }
 
+impl Default for Highlighter {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Highlighter {
     pub fn new() -> Self {
         let syntax_set = SyntaxSet::load_defaults_newlines();

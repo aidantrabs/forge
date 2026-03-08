@@ -24,14 +24,18 @@ impl Renderer {
         ctx.insert("reading_time", &post.reading_time);
         ctx.insert("slug", &post.slug);
         ctx.insert("site", config);
-        self.tera.render("post.html", &ctx).expect("failed to render post")
+        self.tera
+            .render("post.html", &ctx)
+            .expect("failed to render post")
     }
 
     pub fn render_index(&self, posts: &[Post], config: &SiteConfig) -> String {
         let mut ctx = Context::new();
         ctx.insert("posts", posts);
         ctx.insert("site", config);
-        self.tera.render("index.html", &ctx).expect("failed to render index")
+        self.tera
+            .render("index.html", &ctx)
+            .expect("failed to render index")
     }
 
     pub fn render_tag(&self, tag: &str, posts: &[&Post], config: &SiteConfig) -> String {
@@ -39,6 +43,8 @@ impl Renderer {
         ctx.insert("tag", tag);
         ctx.insert("posts", &posts);
         ctx.insert("site", config);
-        self.tera.render("tag.html", &ctx).expect("failed to render tag page")
+        self.tera
+            .render("tag.html", &ctx)
+            .expect("failed to render tag page")
     }
 }

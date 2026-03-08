@@ -3,102 +3,102 @@
 /* -- fonts -- */
 
 @font-face {
-  font-family: "Instrument Sans";
-  src: url("/static/fonts/InstrumentSans-Variable.woff2") format("woff2");
-  font-weight: 400 600;
-  font-display: swap;
+    font-family: "Instrument Sans";
+    src: url("/static/fonts/InstrumentSans-Variable.woff2") format("woff2");
+    font-weight: 400 600;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Sedgwick Ave Display";
-  src: url("/static/fonts/SedgwickAveDisplay-Regular.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
+    font-family: "Sedgwick Ave Display";
+    src: url("/static/fonts/SedgwickAveDisplay-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-display: swap;
 }
 
 @font-face {
-  font-family: "Fira Code";
-  src: url("/static/fonts/FiraCode-Variable.woff2") format("woff2");
-  font-weight: 400 500;
-  font-display: swap;
+    font-family: "Fira Code";
+    src: url("/static/fonts/FiraCode-Variable.woff2") format("woff2");
+    font-weight: 400 500;
+    font-display: swap;
 }
 
 /* -- theme -- */
 
 @theme {
-  --font-sans: "Instrument Sans", system-ui, sans-serif;
-  --font-graffiti: "Sedgwick Ave Display", cursive;
-  --font-mono: "Fira Code", monospace;
+    --font-sans: "Instrument Sans", system-ui, sans-serif;
+    --font-graffiti: "Sedgwick Ave Display", cursive;
+    --font-mono: "Fira Code", monospace;
 }
 
 /* -- color system -- */
 
 :root {
-  --bg: #f8f6f1;
-  --bg-elevated: #ffffff;
-  --text: #1c1917;
-  --text-muted: #78716c;
-  --accent: #ff6663;
-  --border: #e7e5e4;
-  --pull-string: #a8a29e;
-  --shadow: rgba(28, 25, 23, 0.04);
+    --bg: #f8f6f1;
+    --bg-elevated: #ffffff;
+    --text: #1c1917;
+    --text-muted: #78716c;
+    --accent: #ff6663;
+    --border: #e7e5e4;
+    --pull-string: #a8a29e;
+    --shadow: rgba(28, 25, 23, 0.04);
 }
 
 .dark {
-  --bg: #141211;
-  --bg-elevated: #1c1917;
-  --text: #f5f5f4;
-  --text-muted: #a8a29e;
-  --accent: #ff7b79;
-  --border: #2e2a27;
-  --pull-string: #57534e;
-  --shadow: rgba(0, 0, 0, 0.3);
+    --bg: #141211;
+    --bg-elevated: #1c1917;
+    --text: #f5f5f4;
+    --text-muted: #a8a29e;
+    --accent: #ff7b79;
+    --border: #2e2a27;
+    --pull-string: #57534e;
+    --shadow: rgba(0, 0, 0, 0.3);
 }
 
 /* -- base -- */
 
 html {
-  -webkit-font-smoothing: antialiased;
-  scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg);
-  color: var(--text);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    font-family: var(--font-sans);
+    background-color: var(--bg);
+    color: var(--text);
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
 /* -- utility classes -- */
 
 .bg-theme {
-  background-color: var(--bg);
+    background-color: var(--bg);
 }
 
 .bg-elevated {
-  background-color: var(--bg-elevated);
+    background-color: var(--bg-elevated);
 }
 
 .text-theme {
-  color: var(--text);
+    color: var(--text);
 }
 
 .text-muted {
-  color: var(--text-muted);
+    color: var(--text-muted);
 }
 
 .text-accent {
-  color: var(--accent);
+    color: var(--accent);
 }
 
 .border-theme {
-  border-color: var(--border);
+    border-color: var(--border);
 }
 
 @media (max-width: 768px) {
-  html {
-    scroll-behavior: auto;
-  }
+    html {
+        scroll-behavior: auto;
+    }
 }
