@@ -1,7 +1,7 @@
 use crate::highlight::Highlighter;
 use chrono::NaiveDate;
 use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag, TagEnd};
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
 use walkdir::WalkDir;
@@ -16,6 +16,7 @@ struct Frontmatter {
     draft: bool,
 }
 
+#[derive(Serialize)]
 pub struct Post {
     pub title: String,
     pub description: String,
