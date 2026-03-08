@@ -97,6 +97,16 @@ fn build() {
         fs::write(tag_dir.join("index.html"), html).expect("failed to write tag page");
     }
 
+    // render tags index
+    let mut tag_counts: Vec<(String, usize)> = tags
+        .iter()
+        .map(|(tag, posts)| (tag.clone(), posts.len()))
+        .collect();
+    tag_counts.sort_by(|a, b| b.1.cmp(&a.1));
+    let tags_index_html = renderer.render_tags_index(&tag_counts, &config);
+    fs::write(output.join("tags").join("index.html"), tags_index_html)
+        .expect("failed to write tags index");
+
     // generate rss feed
     let rss = forge::feed::generate_rss(&posts, &config);
     fs::write(output.join("feed.xml"), rss).expect("failed to write rss feed");

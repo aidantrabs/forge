@@ -38,6 +38,19 @@ impl Renderer {
             .expect("failed to render index")
     }
 
+    pub fn render_tags_index(
+        &self,
+        tags: &[(String, usize)],
+        config: &SiteConfig,
+    ) -> String {
+        let mut ctx = Context::new();
+        ctx.insert("tags", tags);
+        ctx.insert("site", config);
+        self.tera
+            .render("tags.html", &ctx)
+            .expect("failed to render tags index")
+    }
+
     pub fn render_tag(&self, tag: &str, posts: &[&Post], config: &SiteConfig) -> String {
         let mut ctx = Context::new();
         ctx.insert("tag", tag);
