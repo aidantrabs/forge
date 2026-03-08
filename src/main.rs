@@ -78,5 +78,13 @@ fn build() {
     let rss = forge::feed::generate_rss(&posts, &config);
     fs::write(output.join("feed.xml"), rss).expect("failed to write rss feed");
 
+    // generate sitemap and robots.txt
+    let all_tags: Vec<String> = tags.keys().cloned().collect();
+    let sitemap = forge::seo::generate_sitemap(&posts, &all_tags, &config);
+    fs::write(output.join("sitemap.xml"), sitemap).expect("failed to write sitemap");
+
+    let robots = forge::seo::generate_robots(&config);
+    fs::write(output.join("robots.txt"), robots).expect("failed to write robots.txt");
+
     println!("built {} posts, {} tags", posts.len(), tags.len());
 }
