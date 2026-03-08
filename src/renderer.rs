@@ -1,6 +1,5 @@
 use crate::config::SiteConfig;
 use crate::content::Post;
-use std::fs;
 use std::path::Path;
 use tera::{Context, Tera};
 
@@ -35,10 +34,10 @@ impl Renderer {
         self.tera.render("index.html", &ctx).expect("failed to render index")
     }
 
-    pub fn render_tag(&self, tag: &str, posts: &[Post], config: &SiteConfig) -> String {
+    pub fn render_tag(&self, tag: &str, posts: &[&Post], config: &SiteConfig) -> String {
         let mut ctx = Context::new();
         ctx.insert("tag", tag);
-        ctx.insert("posts", posts);
+        ctx.insert("posts", &posts);
         ctx.insert("site", config);
         self.tera.render("tag.html", &ctx).expect("failed to render tag page")
     }
