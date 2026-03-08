@@ -1,0 +1,19 @@
+[package]
+name = "forge"
+version = "0.1.0"
+edition = "2021"
+description = "a rust static site generator for my developer blogs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+pulldown-cmark = "0.12"
+tera = "1"
+serde = { version = "1", features = ["derive"] }
+serde_yaml = "0.9"
+toml = "0.8"
+chrono = { version = "0.4", features = ["serde"] }
+walkdir = "2"
+syntect = "5"
+ammonia = "4"
+rss = "2"
+sitemap = "0.4"
