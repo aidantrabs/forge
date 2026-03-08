@@ -1,3 +1,4 @@
+use chrono::Local;
 use clap::{Parser, Subcommand};
 use forge::config::SiteConfig;
 use forge::content::load_posts;
@@ -26,9 +27,7 @@ fn main() {
 
     match cli.command {
         Commands::Build => build(),
-        Commands::New { title } => {
-            println!("creating post: {}", title);
-        }
+        Commands::New { title } => new_post(&title),
         Commands::Clean => {
             let output = Path::new("output");
             if output.exists() {
@@ -37,6 +36,29 @@ fn main() {
             println!("cleaned output directory");
         }
     }
+}
+
+fn new_post(title: &str) {
+    let slug = title.to_lowercase().replace(' ', "-");
+    let date = Local::now().format("%Y-%m-%d");
+    let path = Path::new("content/posts").join(format!("{}.md", slug));
+
+    if path.exists() {
+        eprintln!("post already exists: {}", path.display());
+        std::process::exit(1);
+    }
+
+    fs::create_dir_all("content/posts").expect("failed to create content dir");
+    fs::write(
+        &path,
+        format!(
+            "---\ntitle: \"{}\"\ndescription: \"\"\ndate: {}\ntags: []\ndraft: true\n---\n",
+            title, date
+        ),
+    )
+    .expect("failed to write post");
+
+    println!("created {}", path.display());
 }
 
 fn build() {
