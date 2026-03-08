@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}#{{ tag }} — {{ site.title }}{% endblock %}
+{% block description %}posts tagged with {{ tag }}{% endblock %}
+{% block canonical %}/tags/{{ tag }}{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-[720px] px-6 pt-32 pb-20">
+    <div class="mb-12 label-with-line">
+        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">#{{ tag }}</span>
+    </div>
+
+    {% for post in posts %}
+    <article class="mb-12 animate-fade-in-up">
+        <a href="/posts/{{ post.slug }}" class="group block">
+            <div class="flex items-baseline justify-between gap-4">
+                <h2 class="text-lg font-medium group-hover:text-accent transition-colors">
+                    {{ post.title }}
+                </h2>
+                <time class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted shrink-0">
+                    {{ post.date }}
+                </time>
+            </div>
+            <p class="mt-2 text-sm text-muted">{{ post.description }}</p>
+        </a>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

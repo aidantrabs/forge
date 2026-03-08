@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} — {{ site.title }}{% endblock %}
+{% block description %}{{ description }}{% endblock %}
+{% block canonical %}/posts/{{ slug }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ title }}{% endblock %}
+{% block og_description %}{{ description }}{% endblock %}
+{% block og_url %}/posts/{{ slug }}{% endblock %}
+{% block tw_title %}{{ title }}{% endblock %}
+{% block tw_description %}{{ description }}{% endblock %}
+
+{% block content %}
+<article class="mx-auto max-w-[720px] px-6 pt-32 pb-20">
+    <header class="mb-12">
+        <h1 class="text-[clamp(1.5rem,4vw,2.5rem)] font-semibold leading-tight">
+            {{ title }}
+        </h1>
+        <div class="mt-4 flex items-center gap-4">
+            <time class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">{{ date }}</time>
+            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">{{ reading_time }} min read</span>
+        </div>
+        <div class="mt-3 flex gap-2">
+            {% for tag in tags %}
+            <a href="/tags/{{ tag }}" class="text-[9px] font-semibold uppercase tracking-[0.2em] text-accent link-hover">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </header>
+
+    <div class="prose">
+        {{ content | safe }}
+    </div>
+</article>
+{% endblock %}
