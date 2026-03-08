@@ -1,4 +1,5 @@
 use chrono::NaiveDate;
+use pulldown_cmark::{html, Options, Parser};
 use serde::Deserialize;
 use std::fs;
 use std::path::Path;
@@ -21,7 +22,8 @@ pub struct Post {
     pub date: NaiveDate,
     pub tags: Vec<String>,
     pub draft: bool,
-    pub raw_markdown: String,
+    pub content_html: String,
+    pub reading_time: usize,
 }
 
 impl Post {
@@ -37,6 +39,10 @@ impl Post {
             .to_string_lossy()
             .into_owned();
 
+        let word_count = body.split_whitespace().count();
+        let reading_time = (word_count / 200).max(1);
+        let content_html = render_markdown(&body);
+
         Post {
             title: frontmatter.title,
             description: frontmatter.description,
@@ -44,9 +50,22 @@ impl Post {
             date: frontmatter.date,
             tags: frontmatter.tags,
             draft: frontmatter.draft,
-            raw_markdown: body,
+            content_html,
+            reading_time,
         }
     }
+}
+
+fn render_markdown(raw: &str) -> String {
+    let options = Options::ENABLE_TABLES
+        | Options::ENABLE_FOOTNOTES
+        | Options::ENABLE_STRIKETHROUGH
+        | Options::ENABLE_HEADING_ATTRIBUTES;
+
+    let parser = Parser::new_ext(raw, options);
+    let mut html_output = String::new();
+    html::push_html(&mut html_output, parser);
+    html_output
 }
 
 fn split_frontmatter(content: &str) -> (String, String) {
