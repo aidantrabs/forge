@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include "partials/head.html" %}
+</head>
+<body class="bg-theme text-theme transition-colors duration-300" style="opacity: 0;">
+    {% include "partials/noise.html" %}
+    {% include "partials/nav.html" %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    <script type="module" src="/static/main.js"></script>
+</body>
+</html>
