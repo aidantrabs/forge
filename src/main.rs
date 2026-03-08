@@ -115,6 +115,14 @@ fn build() {
         copy_dir(static_dir, &output.join("static"));
     }
 
+    // copy cloudflare pages files to output root
+    for file in &["_headers"] {
+        let src = Path::new(file);
+        if src.exists() {
+            fs::copy(src, output.join(file)).expect("failed to copy cloudflare config");
+        }
+    }
+
     println!("built {} posts, {} tags", posts.len(), tags.len());
 }
 
