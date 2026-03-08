@@ -74,6 +74,10 @@ fn build() {
     let index_html = renderer.render_index(&posts, &config);
     fs::write(output.join("index.html"), index_html).expect("failed to write index");
 
+    // render 404
+    let not_found_html = renderer.render_404(&config);
+    fs::write(output.join("404.html"), not_found_html).expect("failed to write 404");
+
     // render posts
     for post in &posts {
         let html = renderer.render_post(post, &config);

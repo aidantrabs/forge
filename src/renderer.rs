@@ -51,6 +51,14 @@ impl Renderer {
             .expect("failed to render tags index")
     }
 
+    pub fn render_404(&self, config: &SiteConfig) -> String {
+        let mut ctx = Context::new();
+        ctx.insert("site", config);
+        self.tera
+            .render("404.html", &ctx)
+            .expect("failed to render 404")
+    }
+
     pub fn render_tag(&self, tag: &str, posts: &[&Post], config: &SiteConfig) -> String {
         let mut ctx = Context::new();
         ctx.insert("tag", tag);
