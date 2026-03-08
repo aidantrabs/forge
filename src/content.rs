@@ -42,7 +42,8 @@ impl Post {
 
         let word_count = body.split_whitespace().count();
         let reading_time = (word_count / 200).max(1);
-        let content_html = render_markdown(&body, highlighter);
+        let raw_html = render_markdown(&body, highlighter);
+        let content_html = sanitize_html(&raw_html);
 
         Post {
             title: frontmatter.title,
@@ -92,6 +93,14 @@ fn render_markdown(raw: &str, highlighter: &Highlighter) -> String {
 
     pulldown_cmark::html::push_html(&mut html_output, events.into_iter());
     html_output
+}
+
+fn sanitize_html(html: &str) -> String {
+    let mut builder = ammonia::Builder::default();
+    builder
+        .add_generic_attributes(&["style"])
+        .add_tags(&["pre", "code", "span", "div"]);
+    builder.clean(html).to_string()
 }
 
 fn split_frontmatter(content: &str) -> (String, String) {
