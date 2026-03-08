@@ -22,7 +22,8 @@ fn main() {
     match cli.command {
         Commands::Build => {
             let config = SiteConfig::load(Path::new("forge.toml"));
-            println!("building {}...", config.title);
+            let posts = forge::content::load_posts(Path::new("content"));
+            println!("building {}... found {} posts", config.title, posts.len());
         }
         Commands::New { title } => {
             println!("creating post: {}", title);
