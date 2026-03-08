@@ -1,5 +1,6 @@
+use crate::highlight::Highlighter;
 use chrono::NaiveDate;
-use pulldown_cmark::{html, Options, Parser};
+use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag, TagEnd};
 use serde::Deserialize;
 use std::fs;
 use std::path::Path;
@@ -27,7 +28,7 @@ pub struct Post {
 }
 
 impl Post {
-    fn from_file(path: &Path) -> Self {
+    fn from_file(path: &Path, highlighter: &Highlighter) -> Self {
         let content = fs::read_to_string(path).expect("failed to read post");
         let (fm, body) = split_frontmatter(&content);
         let frontmatter: Frontmatter =
@@ -41,7 +42,7 @@ impl Post {
 
         let word_count = body.split_whitespace().count();
         let reading_time = (word_count / 200).max(1);
-        let content_html = render_markdown(&body);
+        let content_html = render_markdown(&body, highlighter);
 
         Post {
             title: frontmatter.title,
@@ -56,7 +57,7 @@ impl Post {
     }
 }
 
-fn render_markdown(raw: &str) -> String {
+fn render_markdown(raw: &str, highlighter: &Highlighter) -> String {
     let options = Options::ENABLE_TABLES
         | Options::ENABLE_FOOTNOTES
         | Options::ENABLE_STRIKETHROUGH
@@ -64,7 +65,32 @@ fn render_markdown(raw: &str) -> String {
 
     let parser = Parser::new_ext(raw, options);
     let mut html_output = String::new();
-    html::push_html(&mut html_output, parser);
+    let mut in_code_block = false;
+    let mut code_lang = String::new();
+    let mut code_buf = String::new();
+
+    let events: Vec<Event> = parser
+        .flat_map(|event| match event {
+            Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(lang))) => {
+                in_code_block = true;
+                code_lang = lang.to_string();
+                code_buf.clear();
+                vec![]
+            }
+            Event::Text(text) if in_code_block => {
+                code_buf.push_str(&text);
+                vec![]
+            }
+            Event::End(TagEnd::CodeBlock) => {
+                in_code_block = false;
+                let highlighted = highlighter.highlight(&code_buf, &code_lang);
+                vec![Event::Html(highlighted.into())]
+            }
+            other => vec![other],
+        })
+        .collect();
+
+    pulldown_cmark::html::push_html(&mut html_output, events.into_iter());
     html_output
 }
 
@@ -86,12 +112,13 @@ fn split_frontmatter(content: &str) -> (String, String) {
 
 pub fn load_posts(content_dir: &Path) -> Vec<Post> {
     let posts_dir = content_dir.join("posts");
+    let highlighter = Highlighter::new();
 
     let mut posts: Vec<Post> = WalkDir::new(&posts_dir)
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.path().extension().is_some_and(|ext| ext == "md"))
-        .map(|e| Post::from_file(e.path()))
+        .map(|e| Post::from_file(e.path(), &highlighter))
         .filter(|p| !p.draft)
         .collect();
 
