@@ -5,6 +5,7 @@ use forge::renderer::Renderer;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
+use walkdir::WalkDir;
 
 #[derive(Parser)]
 #[command(name = "forge", version, about = "a rust static site generator")]
@@ -86,5 +87,22 @@ fn build() {
     let robots = forge::seo::generate_robots(&config);
     fs::write(output.join("robots.txt"), robots).expect("failed to write robots.txt");
 
+    // copy static assets
+    let static_dir = Path::new("static");
+    if static_dir.exists() {
+        copy_dir(static_dir, &output.join("static"));
+    }
+
     println!("built {} posts, {} tags", posts.len(), tags.len());
+}
+
+fn copy_dir(src: &Path, dst: &Path) {
+    for entry in WalkDir::new(src).into_iter().filter_map(|e| e.ok()) {
+        let target = dst.join(entry.path().strip_prefix(src).unwrap());
+        if entry.file_type().is_dir() {
+            fs::create_dir_all(&target).expect("failed to create static dir");
+        } else {
+            fs::copy(entry.path(), &target).expect("failed to copy static file");
+        }
+    }
 }
