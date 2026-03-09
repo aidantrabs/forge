@@ -14,10 +14,10 @@
     </div>
 
     <div class="mb-6 label-with-line shrink-0">
-        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">posts /</span>
+        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ posts | length }} posts /</span>
     </div>
 
-    <div class="overflow-y-auto flex-1 min-h-0">
+    <div class="post-list overflow-y-auto flex-1 min-h-0">
         {% for post in posts %}
         <article class="group py-6 border-b border-theme">
             <a href="/posts/{{ post.slug }}" class="block" data-navigate>
