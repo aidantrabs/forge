@@ -239,6 +239,25 @@ body {
     opacity: 0.04;
 }
 
+.graffiti-bg-hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-family: var(--font-graffiti);
+    font-size: clamp(120px, 22vw, 260px);
+    color: var(--text);
+    opacity: 0.06;
+    pointer-events: none;
+    line-height: 0.85;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.dark .graffiti-bg-hero {
+    opacity: 0.04;
+}
+
 /* -- scroll hint -- */
 
 .scroll-hint {
