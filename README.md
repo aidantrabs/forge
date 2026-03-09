@@ -47,7 +47,3 @@ draft: false
 
 post content here.
 ```
-
-## deploy
-
-push to main - github actions builds and deploys to cloudflare pages.
