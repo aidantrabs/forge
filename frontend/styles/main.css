@@ -79,10 +79,6 @@ body {
         scroll-behavior: auto;
     }
 
-    .pull-string {
-        left: 1.25rem;
-    }
-
     .pull-string__line {
         height: 70px;
     }
@@ -95,10 +91,6 @@ body {
 /* -- pull-string toggle -- */
 
 .pull-string {
-    position: fixed;
-    top: 0;
-    left: 2.5rem;
-    z-index: 50;
     display: flex;
     flex-direction: column;
     align-items: center;
