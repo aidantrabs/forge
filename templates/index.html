@@ -13,13 +13,28 @@
         </p>
     </div>
 
-    <div class="mb-6 label-with-line shrink-0">
-        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ posts | length }} posts /</span>
+    <div class="mb-6 flex flex-col gap-4 shrink-0">
+        <div class="flex items-center gap-4">
+            <input type="text" id="post-search" placeholder="search posts..."
+                class="post-search bg-transparent border-b border-theme text-[clamp(13px,1.3vw,15px)] py-2 w-full max-w-[300px] outline-none placeholder:text-muted/50 focus:border-accent transition-colors">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted shrink-0" id="post-count">{{ posts | length }} posts</span>
+        </div>
+        <div class="flex flex-wrap gap-2" id="tag-filters">
+            {% set all_tags = [] %}
+            {% for post in posts %}
+                {% for tag in post.tags %}
+                    {% set_global all_tags = all_tags | concat(with=tag) %}
+                {% endfor %}
+            {% endfor %}
+            {% for tag in all_tags | unique %}
+            <button class="tag-filter text-[10px] font-semibold uppercase tracking-[0.2em] text-muted border border-theme px-3 py-1 transition-colors hover:text-accent hover:border-accent" data-tag="{{ tag }}">#{{ tag }}</button>
+            {% endfor %}
+        </div>
     </div>
 
-    <div>
+    <div id="post-list">
         {% for post in posts %}
-        <article class="group py-6 border-b border-theme">
+        <article class="group py-6 border-b border-theme post-item" data-title="{{ post.title | lower }}" data-description="{{ post.description | lower }}" data-tags="{{ post.tags | join(sep=' ') | lower }}">
             <a href="/posts/{{ post.slug }}" class="block" data-navigate>
                 <time class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted block mb-3 md:hidden">
                     {{ post.date }}
@@ -42,6 +57,7 @@
         </article>
         {% endfor %}
 
+        <p class="text-[13px] text-muted py-8 hidden" id="no-results">no posts match your search.</p>
         <a href="/tags" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent link-hover mt-6 inline-block" data-navigate>view all tags &rarr;</a>
     </div>
 </section>
