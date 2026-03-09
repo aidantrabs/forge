@@ -2,7 +2,7 @@
 
 {% block content %}
 <span class="graffiti-bg select-none" aria-hidden="true">forge</span>
-<section class="relative h-screen overflow-hidden flex flex-col px-6 md:px-10 pt-28 md:pt-36 pb-6 md:pb-10 mx-auto max-w-[900px]">
+<section class="relative min-h-screen px-6 md:px-10 pt-28 md:pt-36 pb-12 md:pb-20 mx-auto max-w-[900px]">
 
     <div class="mb-8 shrink-0">
         <h1 class="text-[clamp(36px,6vw,52px)] font-semibold leading-none tracking-tight">
@@ -17,7 +17,7 @@
         <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ posts | length }} posts /</span>
     </div>
 
-    <div class="post-list overflow-y-auto flex-1 min-h-0">
+    <div>
         {% for post in posts %}
         <article class="group py-6 border-b border-theme">
             <a href="/posts/{{ post.slug }}" class="block" data-navigate>
@@ -47,4 +47,3 @@
 </section>
 {% endblock %}
 
-{% block footer %}{% endblock %}
