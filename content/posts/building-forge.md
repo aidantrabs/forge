@@ -18,6 +18,7 @@ forge is a two-part system:
 the goal was simple: fast builds, tiny output, zero runtime complexity.
 
 ## why rust
+> i'm a wannabe rustacean
 
 rust gives us:
 
