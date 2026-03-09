@@ -8,6 +8,8 @@ pub struct SiteConfig {
     pub description: String,
     pub base_url: String,
     pub author: String,
+    #[serde(default)]
+    pub umami_id: Option<String>,
 }
 
 impl SiteConfig {
