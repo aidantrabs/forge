@@ -12,20 +12,17 @@
 
 {% block content %}
 <article class="mx-auto max-w-[700px] px-6 md:px-10 pt-24 md:pt-32 pb-20">
-    <a href="/" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover mb-12 inline-block" data-navigate>all posts</a>
-
     <header class="mb-12">
-        <time class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted block mb-4">{{ date }}</time>
+        <a href="/" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover inline-block mb-8" data-navigate>&larr; back</a>
         <h1 class="text-[clamp(1.75rem,4vw,3rem)] font-medium leading-tight">
             {{ title }}
         </h1>
-        <p class="mt-4 text-[clamp(14px,1.5vw,16px)] text-muted leading-relaxed">{{ description }}</p>
-        <div class="mt-4 flex items-center gap-4">
-            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">{{ reading_time }} min read</span>
-        </div>
-        <div class="mt-3 flex gap-3">
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <time class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ date }}</time>
+            <span class="text-[10px] text-muted">/</span>
+            <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ reading_time }} min read</span>
             {% for tag in tags %}
-            <a href="/tags/{{ tag }}" class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted hover:text-accent transition-colors" data-navigate>#{{ tag }}</a>
+            <a href="/tags/{{ tag }}" class="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent hover:text-theme transition-colors" data-navigate>#{{ tag }}</a>
             {% endfor %}
         </div>
     </header>
@@ -36,18 +33,12 @@
 
     <nav class="mt-16 pt-8 border-t border-theme flex justify-between">
         {% if prev_post %}
-        <a href="/posts/{{ prev_post.slug }}" class="group" data-navigate>
-            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted block mb-1">&larr; prev</span>
-            <span class="text-sm font-medium group-hover:text-accent transition-colors">{{ prev_post.title }}</span>
-        </a>
+        <a href="/posts/{{ prev_post.slug }}" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover" data-navigate>&larr; {{ prev_post.title }}</a>
         {% else %}
         <span></span>
         {% endif %}
         {% if next_post %}
-        <a href="/posts/{{ next_post.slug }}" class="group text-right" data-navigate>
-            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted block mb-1">next &rarr;</span>
-            <span class="text-sm font-medium group-hover:text-accent transition-colors">{{ next_post.title }}</span>
-        </a>
+        <a href="/posts/{{ next_post.slug }}" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover text-right" data-navigate>{{ next_post.title }} &rarr;</a>
         {% endif %}
     </nav>
 </article>

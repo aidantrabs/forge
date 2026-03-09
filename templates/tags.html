@@ -6,14 +6,16 @@
 
 {% block content %}
 <section class="mx-auto max-w-[900px] px-6 md:px-10 pt-24 md:pt-32 pb-20">
-    <div class="mb-12 label-with-line">
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">tags /</span>
+    <a href="/" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover inline-block mb-8" data-navigate>&larr; back</a>
+
+    <div class="mb-10 label-with-line">
+        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">tags /</span>
     </div>
 
     {% for tag in tags %}
     <a href="/tags/{{ tag.0 }}" class="group flex items-baseline justify-between py-4 border-b border-theme" data-navigate>
-        <span class="text-sm font-medium group-hover:text-accent transition-colors duration-200">#{{ tag.0 }}</span>
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">{{ tag.1 }} posts</span>
+        <span class="text-[clamp(15px,1.5vw,17px)] font-medium group-hover:text-accent transition-colors duration-200">#{{ tag.0 }}</span>
+        <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ tag.1 }}</span>
     </a>
     {% endfor %}
 </section>
