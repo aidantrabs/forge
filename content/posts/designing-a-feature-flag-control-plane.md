@@ -3,7 +3,7 @@ title: "designing a feature flag control plane"
 description: "the research and architecture behind building a self-hosted feature flag system from scratch"
 date: 2026-03-09
 tags: [java, system-design]
-draft: true
+draft: false
 ---
 
 i've been thinking about feature flags a lot lately. not the "just use an if statement" kind - the kind where you need to roll out a payment flow to 5% of users in canada on the premium plan, watch it for a week, then crank it to 50% without touching a deploy pipeline. the kind where someone on your team can flip a kill switch at 2am when something goes sideways.
