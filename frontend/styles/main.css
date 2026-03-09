@@ -228,15 +228,30 @@ body {
     font-size: clamp(200px, 40vw, 500px);
     line-height: 0.8;
     color: var(--accent);
-    opacity: 0.06;
+    opacity: 0.08;
     pointer-events: none;
     transform: rotate(-8deg);
     white-space: nowrap;
     user-select: none;
 }
 
+@media (max-width: 768px) {
+    .graffiti-bg {
+        opacity: 0.1;
+        font-size: clamp(150px, 50vw, 300px);
+        bottom: -10%;
+        left: -15%;
+    }
+}
+
 .dark .graffiti-bg {
-    opacity: 0.04;
+    opacity: 0.05;
+}
+
+@media (max-width: 768px) {
+    .dark .graffiti-bg {
+        opacity: 0.07;
+    }
 }
 
 
