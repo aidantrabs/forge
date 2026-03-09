@@ -10,6 +10,25 @@
 {% block tw_title %}{{ title }}{% endblock %}
 {% block tw_description %}{{ description }}{% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ title }}",
+    "description": "{{ description }}",
+    "datePublished": "{{ date }}",
+    "author": {
+        "@type": "Person",
+        "name": "{{ site.author }}"
+    },
+    "url": "{{ site.base_url }}/posts/{{ slug }}",
+    "wordCount": {{ reading_time | int * 200 }},
+    "keywords": "{{ tags | join(sep=', ') }}"
+}
+</script>
+{% endblock %}
+
 {% block content %}
 <article class="mx-auto max-w-[700px] px-6 md:px-10 pt-24 md:pt-32 pb-20">
     <header class="mb-12">
@@ -31,7 +50,16 @@
         {{ content | safe }}
     </div>
 
-    <nav class="mt-16 pt-8 border-t border-theme flex justify-between">
+    <div class="mt-12 pt-8 border-t border-theme">
+        <div class="flex items-center gap-6">
+            <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">share</span>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.base_url }}/posts/{{ slug }}" target="_blank" rel="noopener" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover">linkedin</a>
+            <a href="https://twitter.com/intent/tweet?url={{ site.base_url }}/posts/{{ slug }}&text={{ title }}" target="_blank" rel="noopener" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover">twitter</a>
+            <button onclick="navigator.clipboard.writeText('{{ site.base_url }}/posts/{{ slug }}').then(()=>{this.textContent='copied!';setTimeout(()=>this.textContent='copy link',1500)})" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover cursor-pointer">copy link</button>
+        </div>
+    </div>
+
+    <nav class="mt-8 pt-8 border-t border-theme flex justify-between">
         {% if prev_post %}
         <a href="/posts/{{ prev_post.slug }}" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-muted link-hover" data-navigate>&larr; {{ prev_post.title }}</a>
         {% else %}
