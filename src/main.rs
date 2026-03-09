@@ -68,6 +68,9 @@ fn build() {
     let renderer = Renderer::new(Path::new("templates"));
 
     let output = Path::new("output");
+    if output.exists() {
+        fs::remove_dir_all(output).expect("failed to clean output");
+    }
     fs::create_dir_all(output.join("posts")).expect("failed to create output dirs");
     fs::create_dir_all(output.join("tags")).expect("failed to create output dirs");
 
