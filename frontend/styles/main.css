@@ -78,6 +78,18 @@ body {
     html {
         scroll-behavior: auto;
     }
+
+    .pull-string {
+        right: 1.25rem;
+    }
+
+    .pull-string__line {
+        height: 70px;
+    }
+
+    .scroll-hint {
+        display: none;
+    }
 }
 
 /* -- pull-string toggle -- */
