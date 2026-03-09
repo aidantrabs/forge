@@ -255,6 +255,23 @@ body {
 }
 
 
+/* -- post search & filter -- */
+
+.post-search::placeholder {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.tag-filter {
+    cursor: pointer;
+    background: none;
+}
+
+.tag-filter--active {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 /* -- page transitions -- */
 
 main {
