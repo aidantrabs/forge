@@ -80,7 +80,7 @@ body {
     }
 
     .pull-string {
-        right: 1.25rem;
+        left: 1.25rem;
     }
 
     .pull-string__line {
@@ -97,7 +97,7 @@ body {
 .pull-string {
     position: fixed;
     top: 0;
-    right: 2.5rem;
+    left: 2.5rem;
     z-index: 50;
     display: flex;
     flex-direction: column;
@@ -265,27 +265,14 @@ body {
     }
 }
 
-/* -- marquee -- */
+/* -- page transitions -- */
 
-.marquee {
-    overflow: hidden;
-    padding: 1.25rem 0;
-    white-space: nowrap;
+main {
+    transition: opacity 0.15s ease;
 }
 
-.marquee__track {
-    display: inline-flex;
-    animation: marquee 25s linear infinite;
-}
-
-.marquee__item {
-    padding: 0 1.5rem;
-}
-
-@keyframes marquee {
-    to {
-        transform: translateX(-50%);
-    }
+main.navigating {
+    opacity: 0;
 }
 
 /* -- prose -- */
