@@ -62,6 +62,7 @@ fn new_post(title: &str) {
 }
 
 fn build() {
+    let start = std::time::Instant::now();
     let config = SiteConfig::load(Path::new("forge.toml"));
     let posts = load_posts(Path::new("content"));
     let renderer = Renderer::new(Path::new("templates"));
@@ -139,7 +140,13 @@ fn build() {
         }
     }
 
-    println!("built {} posts, {} tags", posts.len(), tags.len());
+    let elapsed = start.elapsed();
+    println!(
+        "built {} posts, {} tags in {:.0?}",
+        posts.len(),
+        tags.len(),
+        elapsed
+    );
 }
 
 fn copy_dir(src: &Path, dst: &Path) {
