@@ -3,7 +3,7 @@ title: "svdex: svd image compression"
 description: "exploring image compression through singular value decomposition"
 date: 2026-03-09
 tags: [rust, math]
-draft: true
+draft: false
 ---
 
 i wanted to understand how linear algebra compresses images. not the "read a wikipedia article" kind of understanding - the "build it from scratch and watch it work" kind. so i wrote [svdex](https://github.com/aidantrabs/svdex), a little rust cli that compresses images using singular value decomposition.
