@@ -15,7 +15,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    {% include "partials/footer.html" %}
+    {% block footer %}{% include "partials/footer.html" %}{% endblock %}
 
     <script type="module" src="/static/main.js"></script>
 </body>
