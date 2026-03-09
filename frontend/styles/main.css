@@ -338,13 +338,3 @@ body {
     border-top: 1px solid var(--border);
     margin: 2.5rem 0;
 }
-
-/* -- fout prevention -- */
-
-body.loaded {
-    opacity: 1 !important;
-    transition:
-        opacity 0.3s ease,
-        background-color 0.3s ease,
-        color 0.3s ease;
-}

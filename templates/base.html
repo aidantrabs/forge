@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
     {% include "partials/head.html" %}
+    <style>
+    body { opacity: 0; }
+    body.loaded { opacity: 1; transition: opacity 0.3s ease; }
+    </style>
 </head>
-<body class="bg-theme text-theme transition-colors duration-300" style="opacity: 0;">
+<body>
     {% include "partials/noise.html" %}
     {% include "partials/nav.html" %}
 
