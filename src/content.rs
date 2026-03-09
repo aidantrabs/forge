@@ -4,6 +4,7 @@ use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag, TagEnd};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
+use std::time::SystemTime;
 use walkdir::WalkDir;
 
 #[derive(Deserialize)]
@@ -14,6 +15,8 @@ struct Frontmatter {
     tags: Vec<String>,
     #[serde(default)]
     draft: bool,
+    #[serde(default)]
+    weight: Option<i32>,
 }
 
 #[derive(Serialize)]
@@ -26,6 +29,10 @@ pub struct Post {
     pub draft: bool,
     pub content_html: String,
     pub reading_time: usize,
+    #[serde(skip)]
+    pub weight: i32,
+    #[serde(skip)]
+    pub modified: u64,
 }
 
 impl Post {
@@ -42,6 +49,13 @@ impl Post {
         let raw_html = render_markdown(&body, highlighter);
         let content_html = sanitize_html(&raw_html);
 
+        let modified = fs::metadata(path)
+            .and_then(|m| m.modified())
+            .unwrap_or(SystemTime::UNIX_EPOCH)
+            .duration_since(SystemTime::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs();
+
         Post {
             title: frontmatter.title,
             description: frontmatter.description,
@@ -51,6 +65,8 @@ impl Post {
             draft: frontmatter.draft,
             content_html,
             reading_time,
+            weight: frontmatter.weight.unwrap_or(0),
+            modified,
         }
     }
 }
@@ -206,6 +222,11 @@ pub fn load_posts(content_dir: &Path) -> Vec<Post> {
         .filter(|p| !p.draft)
         .collect();
 
-    posts.sort_by(|a, b| b.date.cmp(&a.date));
+    posts.sort_by(|a, b| {
+        b.date
+            .cmp(&a.date)
+            .then(b.weight.cmp(&a.weight))
+            .then(b.modified.cmp(&a.modified))
+    });
     posts
 }
