@@ -14,7 +14,13 @@ impl Renderer {
         Self { tera }
     }
 
-    pub fn render_post(&self, post: &Post, config: &SiteConfig) -> String {
+    pub fn render_post(
+        &self,
+        post: &Post,
+        prev: Option<&Post>,
+        next: Option<&Post>,
+        config: &SiteConfig,
+    ) -> String {
         let mut ctx = Context::new();
         ctx.insert("title", &post.title);
         ctx.insert("description", &post.description);
@@ -24,6 +30,12 @@ impl Renderer {
         ctx.insert("reading_time", &post.reading_time);
         ctx.insert("slug", &post.slug);
         ctx.insert("site", config);
+        if let Some(p) = prev {
+            ctx.insert("prev_post", p);
+        }
+        if let Some(n) = next {
+            ctx.insert("next_post", n);
+        }
         self.tera
             .render("post.html", &ctx)
             .expect("failed to render post")

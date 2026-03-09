@@ -30,5 +30,22 @@
     <div class="prose">
         {{ content | safe }}
     </div>
+
+    <nav class="mt-16 pt-8 border-t border-theme flex justify-between">
+        {% if prev_post %}
+        <a href="/posts/{{ prev_post.slug }}" class="group">
+            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted block mb-1">&larr; prev</span>
+            <span class="text-sm font-medium group-hover:text-accent transition-colors">{{ prev_post.title }}</span>
+        </a>
+        {% else %}
+        <span></span>
+        {% endif %}
+        {% if next_post %}
+        <a href="/posts/{{ next_post.slug }}" class="group text-right">
+            <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted block mb-1">next &rarr;</span>
+            <span class="text-sm font-medium group-hover:text-accent transition-colors">{{ next_post.title }}</span>
+        </a>
+        {% endif %}
+    </nav>
 </article>
 {% endblock %}

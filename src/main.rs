@@ -79,8 +79,10 @@ fn build() {
     fs::write(output.join("404.html"), not_found_html).expect("failed to write 404");
 
     // render posts
-    for post in &posts {
-        let html = renderer.render_post(post, &config);
+    for (i, post) in posts.iter().enumerate() {
+        let prev = if i + 1 < posts.len() { Some(&posts[i + 1]) } else { None };
+        let next = if i > 0 { Some(&posts[i - 1]) } else { None };
+        let html = renderer.render_post(post, prev, next, &config);
         let post_dir = output.join("posts").join(&post.slug);
         fs::create_dir_all(&post_dir).expect("failed to create post dir");
         fs::write(post_dir.join("index.html"), html).expect("failed to write post");
