@@ -47,3 +47,6 @@ draft: false
 
 post content here.
 ```
+
+## license
+MIT
