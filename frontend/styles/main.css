@@ -83,9 +83,6 @@ body {
         height: 70px;
     }
 
-    .scroll-hint {
-        display: none;
-    }
 }
 
 /* -- pull-string toggle -- */
@@ -225,27 +222,10 @@ body {
 
 .graffiti-bg {
     position: absolute;
+    top: -0.1em;
+    right: -0.2em;
     font-family: var(--font-graffiti);
     font-size: clamp(100px, 20vw, 200px);
-    color: var(--text);
-    opacity: 0.06;
-    transform: rotate(-8deg);
-    pointer-events: none;
-    line-height: 0.85;
-    user-select: none;
-}
-
-.dark .graffiti-bg {
-    opacity: 0.04;
-}
-
-.graffiti-bg-hero {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-8deg);
-    font-family: var(--font-graffiti);
-    font-size: clamp(120px, 22vw, 260px);
     color: var(--text);
     opacity: 0.06;
     pointer-events: none;
@@ -254,27 +234,10 @@ body {
     white-space: nowrap;
 }
 
-.dark .graffiti-bg-hero {
+.dark .graffiti-bg {
     opacity: 0.04;
 }
 
-/* -- scroll hint -- */
-
-.scroll-hint {
-    animation: scrollBounce 2s ease-in-out infinite;
-}
-
-@keyframes scrollBounce {
-    0%,
-    100% {
-        opacity: 0.6;
-        transform: translateY(0);
-    }
-    50% {
-        opacity: 1;
-        transform: translateY(6px);
-    }
-}
 
 /* -- page transitions -- */
 

@@ -1,35 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="h-screen relative p-6 md:p-10 lg:p-12">
-    <div class="hidden md:flex absolute top-6 left-6 md:top-10 md:left-10 flex-col gap-2">
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">~50kb payload</span>
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">static <span class="text-accent">/</span> rust</span>
-    </div>
+<section class="relative mx-auto max-w-[900px] px-6 md:px-10 pt-28 md:pt-36 pb-20 md:pb-32">
+    <span class="graffiti-bg select-none" aria-hidden="true">forge</span>
 
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-        <span class="graffiti-bg-hero select-none" aria-hidden="true">forge</span>
-        <h1 class="text-[clamp(48px,12vw,120px)] font-semibold leading-none tracking-tight relative">
+    <div class="mb-16">
+        <h1 class="text-[clamp(32px,6vw,48px)] font-semibold leading-none tracking-tight">
             <span class="text-accent">forge</span>
         </h1>
-        <p class="mt-6 text-[clamp(13px,1.5vw,15px)] text-muted max-w-[480px] mx-auto leading-relaxed relative">
+        <p class="mt-3 text-[clamp(13px,1.5vw,15px)] text-muted leading-relaxed max-w-[480px]">
             {{ site.description }}
         </p>
     </div>
 
-    <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 flex flex-col gap-2">
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">latest</span>
-        <a href="#posts" class="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent link-hover">view all posts</a>
-    </div>
-
-    <span class="scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 text-[9px] font-semibold uppercase tracking-[0.3em] text-muted hidden md:block">
-        scroll
-    </span>
-</section>
-
-<section id="posts" class="mx-auto max-w-[900px] px-6 md:px-10 py-20 md:py-32">
     <div class="mb-12 label-with-line">
-        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">recent posts /</span>
+        <span class="text-[9px] font-semibold uppercase tracking-[0.2em] text-muted">posts /</span>
     </div>
 
     {% for post in posts %}
