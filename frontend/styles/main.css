@@ -222,16 +222,17 @@ body {
 
 .graffiti-bg {
     position: absolute;
-    top: -0.1em;
-    right: -0.2em;
+    bottom: -15%;
+    left: -10%;
     font-family: var(--font-graffiti);
-    font-size: clamp(100px, 20vw, 200px);
-    color: var(--text);
+    font-size: clamp(200px, 40vw, 500px);
+    line-height: 0.8;
+    color: var(--accent);
     opacity: 0.06;
     pointer-events: none;
-    line-height: 0.85;
-    user-select: none;
+    transform: rotate(-8deg);
     white-space: nowrap;
+    user-select: none;
 }
 
 .dark .graffiti-bg {
