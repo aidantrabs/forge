@@ -84,7 +84,11 @@ fn build() {
 
     // render posts
     for (i, post) in posts.iter().enumerate() {
-        let prev = if i + 1 < posts.len() { Some(&posts[i + 1]) } else { None };
+        let prev = if i + 1 < posts.len() {
+            Some(&posts[i + 1])
+        } else {
+            None
+        };
         let next = if i > 0 { Some(&posts[i - 1]) } else { None };
         let html = renderer.render_post(post, prev, next, &config);
         let post_dir = output.join("posts").join(&post.slug);
@@ -135,12 +139,10 @@ fn build() {
         copy_dir(static_dir, &output.join("static"));
     }
 
-    // copy cloudflare pages files to output root
-    for file in &["_headers"] {
-        let src = Path::new(file);
-        if src.exists() {
-            fs::copy(src, output.join(file)).expect("failed to copy cloudflare config");
-        }
+    // copy cloudflare pages config to output root
+    let headers_file = Path::new("_headers");
+    if headers_file.exists() {
+        fs::copy(headers_file, output.join("_headers")).expect("failed to copy cloudflare config");
     }
 
     let elapsed = start.elapsed();
