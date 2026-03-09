@@ -37,4 +37,12 @@
     </article>
     {% endfor %}
 </section>
+
+<section class="marquee border-y" style="border-color: color-mix(in srgb, var(--accent) 20%, transparent);">
+    <div class="marquee__track">
+        {% for i in range(end=16) %}
+        <span class="marquee__item text-[24px] md:text-[32px] font-medium text-muted">Read More /</span>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}

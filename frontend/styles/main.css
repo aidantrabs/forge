@@ -235,6 +235,29 @@ body {
     opacity: 0.04;
 }
 
+/* -- marquee -- */
+
+.marquee {
+    overflow: hidden;
+    padding: 1.25rem 0;
+    white-space: nowrap;
+}
+
+.marquee__track {
+    display: inline-flex;
+    animation: marquee 25s linear infinite;
+}
+
+.marquee__item {
+    padding: 0 1.5rem;
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 /* -- prose -- */
 
 .prose {
