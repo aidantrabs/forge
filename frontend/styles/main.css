@@ -221,9 +221,9 @@ body {
 /* -- graffiti background -- */
 
 .graffiti-bg {
-    position: absolute;
+    position: fixed;
     bottom: -15%;
-    left: -10%;
+    left: -5%;
     font-family: var(--font-graffiti);
     font-size: clamp(200px, 40vw, 500px);
     line-height: 0.8;
