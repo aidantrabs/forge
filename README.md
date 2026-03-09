@@ -1,40 +1,35 @@
 # forge
 
-a rust static site generator for developer blogs.
+my static site generator for developer blogs, built with rust.
 
 ## stack
 
-- **generator** — rust cli (pulldown-cmark, tera, syntect, ammonia)
-- **frontend** — vite 6, vanilla typescript, tailwind css v4
-- **hosting** — cloudflare pages
+- **generator** - rust (pulldown-cmark, tera, syntect, ammonia)
+- **frontend** - vite 6, vanilla typescript, tailwind css v4
+- **hosting** - cloudflare pages
 
 ## usage
 
 ```bash
-# install dependencies
 npm install
-
-# create a new post
-cargo run -- new "my post title"
-
-# build the site
 npm run build && cargo run -- build
+```
 
-# clean output
+```bash
+cargo run -- new "post title"
 cargo run -- clean
 ```
 
-## project structure
+## structure
 
 ```
-forge/
-├── src/              # rust generator
-├── frontend/         # vite + typescript + css
-├── templates/        # tera html templates
-├── content/posts/    # markdown posts
-├── static/           # built css/js + assets
-├── forge.toml        # site config
-└── output/           # generated site
+src/              # rust generator
+frontend/         # vite + typescript + css
+templates/        # tera html templates
+content/posts/    # markdown posts
+static/           # built css/js + assets
+forge.toml        # site config
+output/           # generated site
 ```
 
 ## content
@@ -55,7 +50,4 @@ post content here.
 
 ## deploy
 
-connect the repo to cloudflare pages:
-
-- **build command:** `npm install && npm run build && cargo run -- build`
-- **output directory:** `output`
+push to main - github actions builds and deploys to cloudflare pages.
