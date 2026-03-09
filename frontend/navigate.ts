@@ -1,4 +1,5 @@
 import { initScrollReveal } from './scroll';
+import { renderMath } from './math';
 
 function swapContent(html: string) {
     const parser = new DOMParser();
@@ -16,14 +17,7 @@ function swapContent(html: string) {
         window.scrollTo(0, 0);
         bindLinks();
         initScrollReveal();
-        if ((window as any).renderMathInElement) {
-            (window as any).renderMathInElement(oldMain, {
-                delimiters: [
-                    { left: '$$', right: '$$', display: true },
-                    { left: '$', right: '$', display: false },
-                ],
-            });
-        }
+        renderMath(oldMain);
     }, 150);
 }
 
