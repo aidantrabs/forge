@@ -235,6 +235,24 @@ body {
     opacity: 0.04;
 }
 
+/* -- scroll hint -- */
+
+.scroll-hint {
+    animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(6px);
+    }
+}
+
 /* -- marquee -- */
 
 .marquee {
