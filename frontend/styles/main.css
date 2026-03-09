@@ -368,3 +368,30 @@ main.navigating {
     border-top: 1px solid var(--border);
     margin: 2.5rem 0;
 }
+
+.prose table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.prose th,
+.prose td {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+.prose th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.prose td {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+}
