@@ -1,3 +1,4 @@
+import { initFilter } from './filter';
 import { initScrollReveal } from './scroll';
 import { renderMath } from './math';
 
@@ -18,6 +19,7 @@ function swapContent(html: string) {
         bindLinks();
         initScrollReveal();
         renderMath(oldMain);
+        initFilter();
     }, 150);
 }
 
