@@ -2,18 +2,21 @@ use crate::config::SiteConfig;
 use crate::content::Post;
 
 pub fn generate_sitemap(posts: &[Post], tags: &[String], config: &SiteConfig) -> String {
-    let mut urls = vec![format!("  <url><loc>{}</loc></url>", config.base_url)];
+    let mut urls = vec![format!(
+        "  <url>\n    <loc>{}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>",
+        config.base_url
+    )];
 
     for post in posts {
         urls.push(format!(
-            "  <url><loc>{}/posts/{}</loc></url>",
-            config.base_url, post.slug
+            "  <url>\n    <loc>{}/posts/{}</loc>\n    <lastmod>{}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>",
+            config.base_url, post.slug, post.date
         ));
     }
 
     for tag in tags {
         urls.push(format!(
-            "  <url><loc>{}/tags/{}</loc></url>",
+            "  <url>\n    <loc>{}/tags/{}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.5</priority>\n  </url>",
             config.base_url, tag
         ));
     }
