@@ -16,6 +16,14 @@ function swapContent(html: string) {
         window.scrollTo(0, 0);
         bindLinks();
         initScrollReveal();
+        if ((window as any).renderMathInElement) {
+            (window as any).renderMathInElement(oldMain, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                ],
+            });
+        }
     }, 150);
 }
 
