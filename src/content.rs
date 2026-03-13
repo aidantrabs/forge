@@ -71,25 +71,90 @@ impl Post {
     }
 }
 
+fn count_backticks(chars: &mut std::iter::Peekable<std::str::Chars>, result: &mut String) -> usize {
+    let mut count = 0;
+    while chars.peek() == Some(&'`') {
+        result.push(chars.next().unwrap());
+        count += 1;
+    }
+    count
+}
+
 fn protect_math(raw: &str) -> (String, Vec<String>) {
     let mut result = String::new();
     let mut math_blocks: Vec<String> = Vec::new();
     let mut chars = raw.chars().peekable();
+    let mut at_line_start = true;
 
     while let Some(&ch) = chars.peek() {
-        if ch == '`' {
-            // skip code spans/blocks
+        if ch == '\n' {
             result.push(chars.next().unwrap());
-            while let Some(&c) = chars.peek() {
-                result.push(chars.next().unwrap());
-                if c == '`' {
-                    break;
+            at_line_start = true;
+        } else if ch == '`' {
+            let backtick_count = count_backticks(&mut chars, &mut result);
+
+            if backtick_count >= 3 && at_line_start {
+                while let Some(&c) = chars.peek() {
+                    if c == '\n' {
+                        break;
+                    }
+                    result.push(chars.next().unwrap());
+                }
+                loop {
+                    match chars.peek() {
+                        None => break,
+                        Some(&'\n') => {
+                            result.push(chars.next().unwrap());
+                        }
+                        Some(&'`') => {
+                            let count = count_backticks(&mut chars, &mut result);
+                            if count >= backtick_count {
+                                while let Some(&c) = chars.peek() {
+                                    if c == '\n' {
+                                        break;
+                                    }
+                                    result.push(chars.next().unwrap());
+                                }
+                                break;
+                            }
+                            while let Some(&c) = chars.peek() {
+                                if c == '\n' {
+                                    break;
+                                }
+                                result.push(chars.next().unwrap());
+                            }
+                        }
+                        Some(_) => {
+                            while let Some(&c) = chars.peek() {
+                                if c == '\n' {
+                                    break;
+                                }
+                                result.push(chars.next().unwrap());
+                            }
+                        }
+                    }
+                }
+            } else {
+                at_line_start = false;
+                loop {
+                    match chars.peek() {
+                        None => break,
+                        Some(&'`') => {
+                            let count = count_backticks(&mut chars, &mut result);
+                            if count == backtick_count {
+                                break;
+                            }
+                        }
+                        Some(_) => {
+                            result.push(chars.next().unwrap());
+                        }
+                    }
                 }
             }
         } else if ch == '$' {
+            at_line_start = false;
             chars.next();
             if chars.peek() == Some(&'$') {
-                // display math $$...$$
                 chars.next();
                 let mut math = String::new();
                 while let Some(&c) = chars.peek() {
@@ -108,7 +173,6 @@ fn protect_math(raw: &str) -> (String, Vec<String>) {
                 math_blocks.push(format!("$${math}$$"));
                 result.push_str(&format!("\x00MATH{idx}\x00"));
             } else {
-                // inline math $...$
                 let mut math = String::new();
                 let mut found_end = false;
                 while let Some(&c) = chars.peek() {
@@ -129,6 +193,9 @@ fn protect_math(raw: &str) -> (String, Vec<String>) {
                 }
             }
         } else {
+            if ch != ' ' && ch != '\t' {
+                at_line_start = false;
+            }
             result.push(chars.next().unwrap());
         }
     }

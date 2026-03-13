@@ -35,7 +35,7 @@ the first thing i needed was fixture pages that expose request-scoped state in t
 
 **`concurrent-head.tsx`** - takes a `?id=N` query param via `getServerSideProps` and sets a `<title>` and `<meta>` tag with that id:
 
-````tsx
+```tsx
 export default function ConcurrentHeadPage({ reqId }: Props) {
   return (
     <div>
@@ -47,7 +47,7 @@ export default function ConcurrentHeadPage({ reqId }: Props) {
     </div>
   );
 }
-````
+```
 
 **`concurrent-router.tsx`** - echoes back the ssr pathname and query from `getServerSideProps` plus `useRouter()`.
 
