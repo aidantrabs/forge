@@ -53,7 +53,7 @@ export default function ConcurrentHeadPage({ reqId }: Props) {
 
 the test fires 15 concurrent requests at each page and verifies every response contains only its own data. if head state leaks between requests, request 0's response would have request 14's title.
 
-small gotcha i hit along the way - `<title>req-{reqId}</title>` in jsx produces children as an array `["req-", "42"]`, not a single string. vinext's head shim only serializes string children for title tags, so the title rendered empty. switching to `<title>{`req-${reqId}`}</title>` produces a single string child and works fine. not a bug i introduced - it's pre-existing in the head shim - but it tripped me up for a bit.
+small gotcha i hit along the way - `<title>req-{reqId}</title>` in jsx produces children as an array `["req-", "42"]`, not a single string. vinext's head shim only serializes string children for title tags, so the title rendered empty. switching to `` <title>{`req-${reqId}`}</title> `` produces a single string child and works fine. not a bug i introduced - it's pre-existing in the head shim - but it tripped me up for a bit.
 
 ## finding a real bug
 
@@ -122,5 +122,5 @@ all four tests pass - head isolation in dev, router isolation in dev, data isola
 
 - vite's multi-environment module graphs mean you can have the same module loaded multiple times with completely different state. this is by design for rsc/ssr/client separation, but it creates subtle bugs when server-side code assumes module singletons.
 - `AsyncLocalStorage` works great for request isolation, but only if the als-backed accessors are registered in every module instance that needs them.
-- jsx `<title>text-{variable}</title>` produces an array of children, not a string. `<title>{`text-${variable}`}</title>` produces a single string. matters when the consumer only handles string children.
+- jsx `<title>text-{variable}</title>` produces an array of children, not a string. `` <title>{`text-${variable}`}</title> `` produces a single string. matters when the consumer only handles string children.
 - writing concurrency tests that actually catch isolation bugs requires real parallel `Promise.all` with enough requests to trigger interleaving. serial tests will never catch these.

@@ -297,3 +297,71 @@ pub fn load_posts(content_dir: &Path) -> Vec<Post> {
     });
     posts
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_sanitize_title_in_code() {
+        let input = "<p>the <code>&lt;title&gt;</code> showed</p>";
+        let result = sanitize_html(input);
+        println!("Input:  {}", input);
+        println!("Output: {}", result);
+        assert!(result.contains("&lt;title&gt;"), "title entity should survive sanitization");
+    }
+
+    #[test]
+    fn test_protect_math_inline_code_with_backticks() {
+        let input = "switching to `<title>{`req-${reqId}`}</title>` works";
+        let (result, blocks) = protect_math(input);
+        println!("Input:  {}", input);
+        println!("Result: {}", result);
+        println!("Blocks: {:?}", blocks);
+        assert!(blocks.is_empty(), "no math blocks should be created");
+        assert_eq!(input, result, "content should pass through unchanged");
+    }
+
+    #[test]
+    fn test_protect_math_code_fence() {
+        let input = "before\n```tsx\n<title>{`req-${reqId}`}</title>\n```\nafter";
+        let (result, blocks) = protect_math(input);
+        println!("Input:  {}", input);
+        println!("Result: {}", result);
+        println!("Blocks: {:?}", blocks);
+        assert!(blocks.is_empty(), "no math blocks should be created inside code fence");
+        assert_eq!(input, result, "content should pass through unchanged");
+    }
+
+    #[test]
+    fn test_full_pipeline_code_fence_with_template_literals() {
+        let highlighter = Highlighter::new();
+        let input = "text before\n\n```tsx\nexport default function Page({ id }: Props) {\n  return <title>{`req-${id}`}</title>;\n}\n```\n\ntext after";
+        let raw_html = render_markdown(input, &highlighter);
+        let html = sanitize_html(&raw_html);
+        println!("Output: {}", html);
+        assert!(html.contains("req-"), "template literal content should be present");
+        assert!(html.contains("text before"), "content before fence preserved");
+        assert!(html.contains("text after"), "content after fence preserved");
+    }
+
+    #[test]
+    fn test_full_pipeline_inline_code_with_title() {
+        let highlighter = Highlighter::new();
+        let input = "the `<title>` showed `req-13`";
+        let raw_html = render_markdown(input, &highlighter);
+        let html = sanitize_html(&raw_html);
+        println!("Output: {}", html);
+        assert!(html.contains("&lt;title&gt;"), "title tag should be escaped in inline code");
+    }
+
+    #[test]
+    fn test_protect_math_dollar_after_backtick_fence() {
+        let input = "before\n```\nlet x = $foo\n```\n$math$ after";
+        let (result, blocks) = protect_math(input);
+        println!("Result: {}", result);
+        println!("Blocks: {:?}", blocks);
+        assert_eq!(blocks.len(), 1, "only the real math outside fence should be captured");
+        assert!(blocks[0].contains("math"), "the math block should be $math$");
+    }
+}
